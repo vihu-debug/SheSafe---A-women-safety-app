@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fake Call</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+  <!-- Decorative Background Icons -->
+  <span class="safety-icon material-symbols-rounded">shield_person</span>
+  <span class="safety-icon material-symbols-rounded">health_and_safety</span>
+  <span class="safety-icon material-symbols-rounded">security</span>
+
+  <nav class="navbar">
+    <a href="index.html">🏠 Home</a>
+    <a href="sos.html">🚨 SOS</a>
+    <a href="fake-call.html">📞 Fake Call</a>
+    <a href="helpline.html">📞 Helplines</a>
+    <a href="location-share.html">📍 Location</a>
+    <a href="tips.html">💡 Tips</a>
+  </nav>
+
+  <div class="container">
+    <div class="card-header">
+      <div class="header-icon">📞</div>
+      <h1>Fake Call Simulator</h1>
+    </div>
+    <p class="instructions">Use this to get a fake call in uncomfortable situations. The call will appear in 3 seconds.</p>
+    <button class="fake-call-btn" onclick="startFakeCall()">Start Fake Call</button>
+    <div class="call-screen" id="callScreen">
+      <div class="caller-info">
+        <img src="https://cdn.pixabay.com/photo/2016/08/31/11/54/icon-1633249_640.png" alt="Caller" class="caller-img">
+        <h2>Incoming Call...</h2>
+        <p>Mom</p>
+      </div>
+      <div class="call-actions">
+        <button class="decline-btn" onclick="endFakeCall()">Decline</button>
+        <button class="accept-btn" onclick="endFakeCall()">Accept</button>
+      </div>
+    </div>
+    <a href="index.html" class="back-link">⬅️ Back to Home</a>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

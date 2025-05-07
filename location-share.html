@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Share Location</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+</head>
+<body>
+  <!-- Decorative Background Icons -->
+  <span class="safety-icon material-symbols-rounded">shield_person</span>
+  <span class="safety-icon material-symbols-rounded">health_and_safety</span>
+  <span class="safety-icon material-symbols-rounded">security</span>
+
+  <nav class="navbar">
+    <a href="index.html">🏠 Home</a>
+    <a href="sos.html">🚨 SOS</a>
+    <a href="fake-call.html">📞 Fake Call</a>
+    <a href="helpline.html">📞 Helplines</a>
+    <a href="location-share.html">📍 Location</a>
+    <a href="tips.html">💡 Tips</a>
+  </nav>
+
+  <div class="container">
+    <div class="card-header">
+      <div class="header-icon">📍</div>
+      <h1>Share Your Location</h1>
+    </div>
+    <p class="instructions">Share your current location with friends and family.</p>
+    <button class="share-btn" onclick="shareLocation()">Share My Location</button>
+    <div id="locationDisplay" class="location-info"></div>
+    <a href="index.html" class="back-link">⬅️ Back to Home</a>
+  </div>
+  <script>
+    function shareLocation() {
+      if (navigator.geolocation) {
+        document.getElementById('locationDisplay').innerHTML = '<p>Getting your location...</p>';
+        navigator.geolocation.getCurrentPosition(position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+          document.getElementById('locationDisplay').innerHTML = 
+            `<p>Latitude: ${lat.toFixed(6)}</p>
+             <p>Longitude: ${lon.toFixed(6)}</p>
+             <a href="${mapLink}" target="_blank" class="map-link">View on Map</a>`;
+             
+          // Try to use Web Share API if available
+          if (navigator.share) {
+            const shareButton = document.createElement('button');
+            shareButton.className = 'share-btn share-location-btn';
+            shareButton.innerHTML = 'Share This Location';
+            shareButton.onclick = () => {
+              navigator.share({
+                title: 'My Location',
+                text: `My current location: ${lat.toFixed(6)}, ${lon.toFixed(6)}`,
+                url: mapLink
+              }).catch(err => console.error('Share failed:', err));
+            };
+            document.getElementById('locationDisplay').appendChild(shareButton);
+          }
+        }, error => {
+          document.getElementById('locationDisplay').innerHTML = 
+            `<p class="error">Error: ${getLocationErrorMessage(error)}</p>`;
+        });
+      } else {
+        document.getElementById('locationDisplay').innerHTML = 
+          '<p class="error">Geolocation not supported by your browser.</p>';
+      }
+    }
+    
+    function getLocationErrorMessage(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          return "Location permission denied.";
+        case error.POSITION_UNAVAILABLE:
+          return "Location information unavailable.";
+        case error.TIMEOUT:
+          return "Location request timed out.";
+        default:
+          return "Unknown error occurred.";
+      }
+    }
+  </script>
+</body>
+</html>
